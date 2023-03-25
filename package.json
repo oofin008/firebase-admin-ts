@@ -1,0 +1,20 @@
+{
+  "name": "firebase-admin-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "firebase emulators:start --import sample-data",
+    "start:clean": "firebase emulators:start",
+    "start:export-on-exit": "firebase emulators:start --import=sample-data --export-on-exit",
+    "export:data": "firebase emulators:export sample-data",
+    "deploy": "firebase deploy --only functions",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@firebase/functions-types": "^0.6.0"
+  }
+}
