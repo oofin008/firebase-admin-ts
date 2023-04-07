@@ -1,5 +1,5 @@
-import { setAdminPermission } from "./setAdminPermission";
+import { setAdminRole } from "./setAdminRole";
 
 export {
-  setAdminPermission,
+  setAdminRole,
 };

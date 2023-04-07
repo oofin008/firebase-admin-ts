@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { FirebaseError } from "firebase-admin";
 
-export const setAdminPermission:functions.HttpsFunction  = functions.https.onRequest(async (req, res) => {
+export const setAdminRole:functions.HttpsFunction  = functions.https.onRequest(async (req, res) => {
   try{
     const authorization = req.headers.authorization;
     if (authorization !== "S@nti-1995") {
