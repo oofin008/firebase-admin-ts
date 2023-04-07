@@ -2,26 +2,33 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { TaskContext } from "firebase-functions/v1/tasks";
 // import { UserRecord } from "firebase-functions/v1/auth";
-// import { isAuth } from "../utils/auth";
+import { useAuth } from "../utils/auth";
+import { HttpsError } from "firebase-functions/v1/auth";
 
-export const listUsers = functions.https.onCall(async (data, context: TaskContext) => {
+interface ListUsersParam {
+  limit: number;
+  page: number;
+}
+
+export const listUsers = functions.https.onCall(async (data: ListUsersParam, context: TaskContext) => {
   try{
-    // isAuth(context, "admin");
+    await useAuth(context, "admin");
     console.log('data: ', data);
-    let { limit, nextPageToken } = data;
-    if (!nextPageToken) {
-      nextPageToken = undefined;
-    }
+    let { limit = 10, page = 1 } = data;
+    // if (!nextPageToken) {
+    //   nextPageToken = undefined;
+    // }
+    const offsetPage = (page * limit) - (limit);
 
     const collectionRef = admin.firestore().collection("users");
     const totalQuery = await collectionRef.count().get();
 
-    let query = collectionRef.orderBy('email', 'desc').limit(limit);
+    let query = collectionRef.orderBy('email', 'desc').offset(offsetPage).limit(limit);
     
-    if (nextPageToken) {
-      const startAfterDoc = await collectionRef.doc(nextPageToken).get();
-      query = query.startAfter(startAfterDoc);
-    }
+    // if (nextPageToken) {
+    //   const startAfterDoc = await collectionRef.doc(nextPageToken).get();
+    //   query = query.startAfter(startAfterDoc);
+    // }
     const querySnapshot = await query.get();
     
     const response: any[] = [];
@@ -36,18 +43,20 @@ export const listUsers = functions.https.onCall(async (data, context: TaskContex
     });
     
     // If there are more documents, log the next page token
-    if (querySnapshot.size >= limit) {
-      const lastDoc = querySnapshot.docs[querySnapshot.size - 1];
-      console.log('Next page:', lastDoc.id);
-      nextPageToken = lastDoc.id;
-    }
+    // if (querySnapshot.size >= limit) {
+    //   const lastDoc = querySnapshot.docs[querySnapshot.size - 1];
+    //   console.log('Next page:', lastDoc.id);
+    //   nextPageToken = lastDoc.id;
+    // }
     return {
       response,
-      nextPageToken,
+      // nextPageToken,
       total: totalQuery.data().count,
     };
   } catch(error: any) {
-    console.log('ListUsers error: ', error);
-    throw new functions.https.HttpsError("internal", error.message);
+    if(error instanceof HttpsError) {
+      throw error;
+    }
+    throw new HttpsError("internal", error.message);
   }
 });

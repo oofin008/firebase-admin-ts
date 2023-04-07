@@ -1,6 +1,6 @@
 import * as admin from "firebase-admin";
 import { setAdminPermission } from "./apis";
-import { createUser, listUsers } from "./funcs";
+import { createUser, listUsers, getPermission } from "./funcs";
 var serviceAcc = require("../../santi-signin-service-account.json");
 
 admin.initializeApp({
@@ -20,25 +20,5 @@ export {
   // funcs
   createUser,
   listUsers,
+  getPermission,
 };
-
-
-// export const updateUser = functions.https.onCall(async (data, context: TaskContext) => {
-//   if (!context.auth) {
-//     throw new functions.https.HttpsError(
-//       "unauthenticated",
-//       "The function must be called while authenticated."
-//     );
-//   }
-
-//   const { token } = context.auth;
-//   if (token.role !== 'admin') {
-//     throw new functions.https.HttpsError(
-//       "permission-denied",
-//       "You need admin permission to create user."
-//     )
-//   }
-//   context.auth.uid
-//   token.uid
-// });
-
