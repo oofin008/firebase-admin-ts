@@ -10,7 +10,7 @@ export const createUser = functions.https.onCall(async (data: CreateUserRequest,
   try {
     // check if the user is authenticated
     await useAuth(context, "admin");
-  
+
     if (!ajv.validate("create_user", data)) {
       throw new HttpsError("invalid-argument", "validate data error");
     }
