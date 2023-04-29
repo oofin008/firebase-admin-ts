@@ -1,9 +1,19 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { FirebaseError } from "firebase-admin";
+import { AdminService } from "../core/services/adminService";
+import { ajv } from "../utils/validator";
+import type { FirebaseError } from "firebase-admin";
+import type { Validator } from "../core/interfaces/validator";
+
 
 export const setAdminRole:functions.HttpsFunction  = functions.https.onRequest(async (req, res) => {
   try{
+    // need to init here, if init outside cloud functions will get firebase error
+    const adminSdk = new AdminService(
+      admin.auth(), 
+      admin.firestore(),
+      ajv as Validator,
+    );
     const authorization = req.headers.authorization;
     if (authorization !== "S@nti-1995") {
       res.status(401).json({ message: "Unauthorized"});
@@ -14,10 +24,8 @@ export const setAdminRole:functions.HttpsFunction  = functions.https.onRequest(a
       res.status(400).json({ message: "Bad Request, uid is required"});
       return;
     }
+    await adminSdk.setRole(uid, "admin");
 
-    const user = await admin.auth().getUser(uid);
-
-    await admin.auth().setCustomUserClaims(user.uid, { role: 'admin'});
     res.status(200).json({message: "Set admin permission success"});
   }catch(err){
     const error = err as FirebaseError;

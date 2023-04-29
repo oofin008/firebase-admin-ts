@@ -1,25 +1,20 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { useAuth } from "../utils/auth";
 import { TaskContext } from "firebase-functions/v1/tasks";
 import { HttpsError } from "firebase-functions/v1/auth";
+import { AdminService } from "../core/services/adminService";
+import { ajv } from "../utils/validator";
+import { Validator } from "../core/interfaces/validator";
 
 export const getPermission = functions.https.onCall(async (_data, context: TaskContext) => {
   try{
+    const adminSdk = new AdminService(
+      admin.auth(),
+      admin.firestore(),
+      ajv as Validator,
+    )
 
-    const user = await useAuth(context, "any");
-
-    const collectionRef = admin.firestore().collection("users");
-    const query = await collectionRef.doc(user.uid).get();
-    const data = query.data();
-  
-    if (!data) {
-      return {};
-    }
-    return {
-      role: data.role,
-      permission: data.permission,
-    }
+    return await adminSdk.getPermission()
   } catch(error: any) {
     if(error instanceof HttpsError) {
       throw error;
