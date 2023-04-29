@@ -1,21 +1,17 @@
-import { HttpsError } from "firebase-functions/v1/auth";
 import type { Auth } from "firebase-admin/auth";
 import type { Firestore } from "firebase-admin/firestore";
-import type { CreateUserRequest, DeleteUserRequest, Role } from "../../types/users";
+import type { Role } from "../../types/users";
 import type { IAdminService } from "../interfaces/adminService";
-import { SchemaType, Validator } from "../interfaces/validator";
 import { UserDocument } from "../data/users";
 
 export class AdminService implements IAdminService {
-  constructor(auth: Auth, firestore: Firestore, validator: Validator) {
+  constructor(auth: Auth, firestore: Firestore) {
     this.auth = auth;
     this.firestore = firestore;
-    this.validator = validator;
   }
 
   private readonly auth: Auth;
   private readonly firestore: Firestore;
-  private readonly validator: Validator;
   private readonly USER_COLLECTION = "users";
 
   public async setRole(uid: string, role: Role): Promise<boolean> {
@@ -45,15 +41,8 @@ export class AdminService implements IAdminService {
     }
   }
 
-  public async createUser(data: CreateUserRequest) {
+  public async createUser(email: string, password: string, role: Role) {
     try {
-      const isVerify = this.validator.validate(SchemaType.CREATE_USER, data);
-      if (!isVerify) {
-        console.log(this.validator.errors);
-        throw new HttpsError("invalid-argument", this.validator.errors);
-      }
-
-      const { email, password, role } = data;
       const user = await this.auth.createUser({ email, password });
       await this.firestore.collection(this.USER_COLLECTION).doc(user.uid).set(
         {
@@ -71,9 +60,6 @@ export class AdminService implements IAdminService {
 
   public async listUsers(limit: number, page: number): Promise<any> {
     try {
-      if (!this.validator.validate(SchemaType.LIST_USER, { limit, page })) {
-        throw new HttpsError("invalid-argument", this.validator.errors);
-      }
       const offsetPage = page * limit - limit;
       const collectionRef = this.firestore.collection(this.USER_COLLECTION);
       const totalQuery = await collectionRef.count().get();
@@ -110,11 +96,9 @@ export class AdminService implements IAdminService {
     return true;
   }
 
-  public async deleteUser(data: DeleteUserRequest): Promise<boolean> {
+  public async deleteUser(uid: string): Promise<boolean> {
     try {
-      if (!this.validator.validate(SchemaType.DELETE_USER, data)) {
-        
-      }
+      return true;
     } catch (error) {
       throw error;
     }

@@ -1,9 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { AdminService } from "../core/services/adminService";
-import { ajv } from "../utils/validator";
 import type { FirebaseError } from "firebase-admin";
-import type { Validator } from "../core/interfaces/validator";
 
 
 export const setAdminRole:functions.HttpsFunction  = functions.https.onRequest(async (req, res) => {
@@ -12,7 +10,6 @@ export const setAdminRole:functions.HttpsFunction  = functions.https.onRequest(a
     const adminSdk = new AdminService(
       admin.auth(), 
       admin.firestore(),
-      ajv as Validator,
     );
     const authorization = req.headers.authorization;
     if (authorization !== "S@nti-1995") {

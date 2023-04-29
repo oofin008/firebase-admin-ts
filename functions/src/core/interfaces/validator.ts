@@ -1,6 +1,6 @@
-export interface Validator {
-  validate: (schemaName: SchemaType, data: any) => boolean;
-  errors: any;
+export abstract class IValidator {
+  static validate: (schemaName: SchemaType, data: any) => boolean;
+  static errors: any;
 }
 
 export enum SchemaType {
