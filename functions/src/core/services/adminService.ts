@@ -84,11 +84,13 @@ export class AdminService implements IAdminService {
     }
   }
 
-  public async getUser(uid: string): Promise<boolean> {
+  public async getUser(uid: string): Promise<UserDocument> {
     try {
-      return true;
+      const promise = await this.firestore.collection(this.USER_COLLECTION).doc(uid).get();
+      const userData =  promise.data() as UserDocument;
+      return userData;
     } catch (error) {
-      return true;
+      throw error;
     }
   }
 
@@ -98,6 +100,8 @@ export class AdminService implements IAdminService {
 
   public async deleteUser(uid: string): Promise<boolean> {
     try {
+      await this.auth.deleteUser(uid);
+      await this.firestore.collection(this.USER_COLLECTION).doc(uid).delete();
       return true;
     } catch (error) {
       throw error;

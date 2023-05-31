@@ -1,5 +1,6 @@
 import type { UserRecord } from "firebase-functions/v1/auth";
 import type { ListUsersResponse, Role } from "../../types/users";
+import type { UserDocument } from "../data/users";
 
 export interface IAdminService {
   setRole(uid: string, role: Role): Promise<boolean>;
@@ -8,7 +9,7 @@ export interface IAdminService {
   
   createUser(email: string, password: string, role: Role): Promise<UserRecord>;
   listUsers(limit: number, page: number): Promise<ListUsersResponse>;
-  getUser(uid: string): Promise<boolean>;
+  getUser(uid: string): Promise<UserDocument>;
   updateUser(data:any): Promise<boolean>;
   deleteUser(uid: string): Promise<boolean>;
 }
