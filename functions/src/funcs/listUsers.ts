@@ -10,15 +10,12 @@ import { Validator } from "../core/services/validator";
 
 const isValidate = (data: ListUsersRequest) => {
   return Validator.validate(SchemaType.LIST_USER, data);
-}
+};
 
 export const listUsers = functions.https.onCall(
   async (data: ListUsersRequest, context: TaskContext) => {
     try {
-      const adminService = new AdminService(
-        admin.auth(),
-        admin.firestore()
-      );
+      const adminService = new AdminService(admin.auth(), admin.firestore());
       await useAuth(context, "admin");
 
       if (!isValidate) {

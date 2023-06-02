@@ -10,15 +10,12 @@ import { SchemaType } from "../core/interfaces/validator";
 
 const isValidate = (data: DeleteUserRequest) => {
   return Validator.validate(SchemaType.DELETE_USER, data);
-}
+};
 
 export const deleteUser = functions.https.onCall(
   async (data: DeleteUserRequest, context: TaskContext) => {
     try {
-      const adminSdk = new AdminService(
-        admin.auth(),
-        admin.firestore(),
-      );
+      const adminSdk = new AdminService(admin.auth(), admin.firestore());
 
       await useAuth(context, "admin");
 
@@ -28,7 +25,6 @@ export const deleteUser = functions.https.onCall(
 
       const { uid } = data;
       return await adminSdk.deleteUser(uid);
-
     } catch (error: any) {
       if (error instanceof HttpsError) {
         throw error;

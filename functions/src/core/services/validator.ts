@@ -9,6 +9,6 @@ export class Validator extends IValidator {
   }
 
   static get errors() {
-    return Validator.ajv.errors?.toString() ?? '';
-  };
+    return Validator.ajv.errors?.toString() ?? "";
+  }
 }
