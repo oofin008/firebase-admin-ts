@@ -4,7 +4,7 @@ import type { Role } from "../../types/users";
 import type { IAdminService } from "../interfaces/adminService";
 import { UserDocument } from "../data/users";
 
-export class AdminService implements IAdminService {
+export default class AdminService implements IAdminService {
   constructor(auth: Auth, firestore: Firestore) {
     this.auth = auth;
     this.firestore = firestore;

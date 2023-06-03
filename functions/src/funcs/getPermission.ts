@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { TaskContext } from "firebase-functions/v1/tasks";
 import { HttpsError } from "firebase-functions/v1/auth";
-import { AdminService } from "../core/services/adminService";
+import AdminService from "../core/services/adminService";
 
 export const getPermission = functions.https.onCall(
   async (_data, context: TaskContext) => {

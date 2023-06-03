@@ -1,9 +1,9 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
+import AdminService from "../core/services/adminService";
 import { TaskContext } from "firebase-functions/v1/tasks";
 import { useAuth } from "../utils/auth";
 import { HttpsError } from "firebase-functions/v1/auth";
-import { AdminService } from "../core/services/adminService";
 import { SchemaType } from "../core/interfaces/validator";
 import { ListUsersRequest } from "../types/users";
 import { Validator } from "../core/services/validator";
