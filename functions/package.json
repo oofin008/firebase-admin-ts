@@ -8,8 +8,8 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test": "jest --verbose --detectOpenHandles",
+    "test:coverage": "jest --verbose --coverage"
   },
   "engines": {
     "node": "16"

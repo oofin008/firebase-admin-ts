@@ -16,6 +16,10 @@ export const setAdminRole:functions.HttpsFunction  = functions.https.onRequest(a
       res.status(401).json({ message: "Unauthorized"});
       return;
     }
+    if (!req.body) {
+      res.status(400).json({ message: "Bad Request"});
+      return;
+    }
     const { uid } = req.body;
     if (!uid) {
       res.status(400).json({ message: "Bad Request, uid is required"});
@@ -26,6 +30,7 @@ export const setAdminRole:functions.HttpsFunction  = functions.https.onRequest(a
     res.status(200).json({message: "Set admin permission success"});
   }catch(err){
     const error = err as FirebaseError;
+    console.log('setAdminRole error: ', err);
     res.status(500).json({ errorInfo: error.message});
   }
 });
