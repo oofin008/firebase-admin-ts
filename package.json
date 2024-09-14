@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "18"
+  },
   "scripts": {
     "start": "firebase emulators:start --import sample-data",
     "start:clean": "firebase emulators:start",
@@ -16,5 +19,8 @@
   "license": "ISC",
   "devDependencies": {
     "@firebase/functions-types": "^0.6.0"
+  },
+  "dependencies": {
+    "firebase-functions": "^6.0.0"
   }
 }

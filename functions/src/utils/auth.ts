@@ -1,11 +1,11 @@
 import { HttpsError } from "firebase-functions/v1/auth";
 import * as admin from "firebase-admin";
-import { TaskContext } from "firebase-functions/v1/tasks";
 import { UserRecord } from "firebase-admin/auth";
+import { CallableContext } from "firebase-functions/v1/https";
 
 type AuthLevel = "user" | "admin" | "moderator" | "any";
 
-export async function useAuth(context: TaskContext, authLevel: AuthLevel): Promise<UserRecord> {
+export async function useAuth(context: CallableContext, authLevel: AuthLevel): Promise<UserRecord> {
 
   const uid = context.auth?.['uid'];
   if(!uid) {

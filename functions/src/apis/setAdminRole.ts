@@ -7,7 +7,7 @@ import type { FirebaseError } from "firebase-admin";
 export const setAdminRole:functions.HttpsFunction  = functions.https.onRequest(async (req, res) => {
   try{
     // need to init here, if init outside cloud functions will get firebase error
-    const adminSdk = new AdminService(
+    const adminService = new AdminService(
       admin.auth(), 
       admin.firestore(),
     );
@@ -25,7 +25,7 @@ export const setAdminRole:functions.HttpsFunction  = functions.https.onRequest(a
       res.status(400).json({ message: "Bad Request, uid is required"});
       return;
     }
-    await adminSdk.setRole(uid, "admin");
+    await adminService.setRole(uid, "admin");
 
     res.status(200).json({message: "Set admin permission success"});
   }catch(err){
