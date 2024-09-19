@@ -1,11 +1,11 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
-import AdminService from "../core/services/adminService";
+import AdminService from "@core/services/adminService";
 import { HttpsError } from "firebase-functions/v1/auth";
-import { useAuth } from "../utils/auth";
-import { DeleteUserRequest } from "../types/users";
-import { Validator } from "../core/services/validator";
-import { SchemaType } from "../core/interfaces/validator";
+import { useAuth } from "@/utils/auth";
+import { DeleteUserRequest } from "@core/data/user";
+import { Validator } from "@core/services/validator";
+import { SchemaType } from "@core/interfaces/validator";
 import { CallableContext } from "firebase-functions/v1/https";
 
 const isValidate = (data: DeleteUserRequest) => {

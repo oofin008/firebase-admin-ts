@@ -1,6 +1,6 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import AdminService from "../core/services/adminService";
+import AdminService from "@core/services/adminService";
 import { FirebaseError } from "firebase-admin";
 
 export const setPermission: functions.HttpsFunction = functions.https.onRequest(async (req, res) => {

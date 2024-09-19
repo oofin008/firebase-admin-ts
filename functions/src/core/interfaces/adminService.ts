@@ -1,9 +1,10 @@
 import type { UserRecord } from "firebase-functions/v1/auth";
-import type { ListUsersResponse, Role } from "../../types/users";
-import type { UserDocument } from "../data/users";
+import type { Role } from "@/types/users";
+import type { UserDocument, ListUsersResponse } from "@/core/data/user";
 
 export interface IAdminService {
   setRole(uid: string, role: Role): Promise<boolean>;
+  getRole(uid: string): Promise<Role>;
   getPermission(): Promise<any>;
   setPermission(uid: string, permission: any): Promise<boolean>;
   

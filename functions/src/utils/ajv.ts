@@ -1,6 +1,7 @@
 import Ajv from "ajv";
-import { SchemaType } from "../core/interfaces/validator";
-import { ALL_ROLES, Role, CreateUserDto, ListUsersDto, DeleteUserDto } from "../types/users";
+import { SchemaType } from "@core/interfaces/validator";
+import { CreateUserDto, ListUsersDto, DeleteUserDto } from "@core/data/user";
+import { ALL_ROLES, Role } from "@/types/users";
 
 const ajv = new Ajv();
 

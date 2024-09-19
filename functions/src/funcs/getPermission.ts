@@ -1,11 +1,11 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 import { HttpsError } from "firebase-functions/v1/auth";
-import AdminService from "../core/services/adminService";
+import AdminService from "@core/services/adminService";
 import { CallableContext } from "firebase-functions/v1/https";
 
 export const getPermission = functions.https.onCall(
-  async (_data, context: CallableContext) => {
+  async (_data, _context: CallableContext) => {
     try {
       const adminService = new AdminService(admin.auth(), admin.firestore());
 

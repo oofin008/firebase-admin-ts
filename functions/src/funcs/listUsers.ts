@@ -1,11 +1,11 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import AdminService from "../core/services/adminService";
-import { useAuth } from "../utils/auth";
+import AdminService from "@core/services/adminService";
+import { useAuth } from "@/utils/auth";
 import { HttpsError } from "firebase-functions/v1/auth";
-import { SchemaType } from "../core/interfaces/validator";
-import { ListUsersRequest } from "../types/users";
-import { Validator } from "../core/services/validator";
+import { SchemaType } from "@core/interfaces/validator";
+import { ListUsersRequest } from "@core/data/user";
+import { Validator } from "@core/services/validator";
 import { CallableContext } from "firebase-functions/v1/https";
 
 const isValidate = (data: ListUsersRequest) => {

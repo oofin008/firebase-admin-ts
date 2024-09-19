@@ -1,8 +1,8 @@
 import type { Auth } from "firebase-admin/auth";
 import type { Firestore } from "firebase-admin/firestore";
-import type { Role } from "../../types/users";
-import type { IAdminService } from "../interfaces/adminService";
-import { UserDocument } from "../data/users";
+import type { Role } from "@/types/users";
+import type { IAdminService } from "@core/interfaces/adminService";
+import { UserDocument } from "@core/data/user";
 
 export default class AdminService implements IAdminService {
   constructor(auth: Auth, firestore: Firestore) {
@@ -22,6 +22,15 @@ export default class AdminService implements IAdminService {
         .doc(uid)
         .set({ role }, { merge: true });
       return true;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  public async getRole(uid: string): Promise<Role> {
+    try {
+      const user = await this.auth.getUser(uid);
+      return user.customClaims?.role;
     } catch (error) {
       throw error;
     }

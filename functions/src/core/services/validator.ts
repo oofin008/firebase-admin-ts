@@ -1,5 +1,5 @@
-import { ajv } from "../../utils/ajv";
-import { IValidator, SchemaType } from "../interfaces/validator";
+import { ajv } from "@/utils/ajv";
+import { IValidator, SchemaType } from "@core/interfaces/validator";
 
 export class Validator extends IValidator {
   private static readonly ajv = ajv;
