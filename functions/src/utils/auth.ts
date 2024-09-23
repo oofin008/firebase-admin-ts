@@ -5,6 +5,16 @@ import { CallableContext } from "firebase-functions/v1/https";
 
 type AuthLevel = "user" | "admin" | "moderator" | "any";
 
+interface IAuthLevelMap {
+  [key: string]: AuthLevel[];
+}
+
+const AuthLevelMap: IAuthLevelMap = {
+  admin: ["admin", "moderator", "user"],
+  moderator: ["moderator", "user"],
+  user: ["user"],
+};
+
 export async function useAuth(context: CallableContext, authLevel: AuthLevel): Promise<UserRecord> {
 
   const uid = context.auth?.['uid'];
@@ -37,11 +47,12 @@ export async function useAuth(context: CallableContext, authLevel: AuthLevel): P
     );
   }
 
-  if (customClaims['role'] !== authLevel) {
+  if (!AuthLevelMap[customClaims['role']].includes(authLevel)) {
     throw new HttpsError(
       "permission-denied",
-      "You need admin permission to call this function"
+      "You don't have permission to call this function"
     );
   }
+
   return user;
 }
