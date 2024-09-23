@@ -71,7 +71,10 @@ export default class AdminService implements IAdminService {
     try {
       const offsetPage = page * limit - limit;
       const collectionRef = this.firestore.collection(this.USER_COLLECTION);
+      console.time("listUsers");
       const totalQuery = await collectionRef.count().get();
+      console.timeEnd("listUsers");
+      
       const query = collectionRef
         .orderBy("email", "desc")
         .offset(offsetPage)

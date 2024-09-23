@@ -1,6 +1,6 @@
 import * as admin from "firebase-admin";
 import { setAdminRole, setPermission } from "./apis";
-import { createUser, listUsers, getPermission, deleteUser } from "./funcs";
+import { createUser, listUsers, getPermission, deleteUser, addExpense, listExpenses } from "./funcs";
 var serviceAcc = require("../../santi-signin-service-account.json");
 
 admin.initializeApp({
@@ -23,4 +23,6 @@ export {
   deleteUser,
   listUsers,
   getPermission,
+  addExpense,
+  listExpenses,
 };
