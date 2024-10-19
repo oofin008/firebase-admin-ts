@@ -11,8 +11,9 @@ export const setAdminRole:functions.HttpsFunction  = functions.https.onRequest(a
       admin.auth(), 
       admin.firestore(),
     );
-    const authorization = req.headers.authorization;
-    if (authorization !== "S@nti-1995") {
+    console.log('setAdminRole req.headers: ', req.headers);
+    const apiKey = req.headers["x-api-key"];
+    if (apiKey !== "S@nti-1995") {
       res.status(401).json({ message: "Unauthorized"});
       return;
     }
@@ -26,6 +27,7 @@ export const setAdminRole:functions.HttpsFunction  = functions.https.onRequest(a
       return;
     }
     await adminService.setRole(uid, "admin");
+    console.log('setAdminRole success for: ', uid);
 
     res.status(200).json({message: "Set admin permission success"});
   }catch(err){

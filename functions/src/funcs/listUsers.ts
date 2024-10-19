@@ -15,17 +15,21 @@ const isValidate = (data: ListUsersRequest) => {
 export const listUsers = functions.https.onCall(
   async (data: ListUsersRequest, context: CallableContext) => {
     try {
+      console.log('listUsers context: ', context);
+
       const adminService = new AdminService(admin.auth(), admin.firestore());
       await useAuth(context, "admin");
+      console.log('user is authorized')
 
       if (!isValidate) {
         throw new HttpsError("invalid-argument", Validator.errors);
       }
-
+      
       let { limit = 10, page = 1 } = data;
 
       return await adminService.listUsers(limit, page);
     } catch (error: any) {
+      console.log('listUsers error: ', error);
       if (error instanceof HttpsError) {
         throw error;
       }
