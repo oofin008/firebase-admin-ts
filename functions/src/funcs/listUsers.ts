@@ -15,7 +15,7 @@ const isValidate = (data: ListUsersRequest) => {
 export const listUsers = functions.https.onCall(
   async (data: ListUsersRequest, context: CallableContext) => {
     try {
-      console.log('listUsers context: ', context);
+      console.log('listUsers data: ', data);
 
       const adminService = new AdminService(admin.auth(), admin.firestore());
       await useAuth(context, "admin");

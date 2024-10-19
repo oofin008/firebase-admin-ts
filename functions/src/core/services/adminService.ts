@@ -87,6 +87,7 @@ export default class AdminService implements IAdminService {
           ...(doc.data() as UserDocument),
         });
       });
+      console.log('listUsers response: ', JSON.stringify(response));
       return {
         response,
         total: totalQuery.data().count,

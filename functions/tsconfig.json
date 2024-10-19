@@ -13,6 +13,7 @@
       "@core/*": ["src/core/*"]
     },
     "resolveJsonModule": true,
+    "removeComments": true
   },
   "compileOnSave": true,
   "include": [

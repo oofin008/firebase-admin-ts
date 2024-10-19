@@ -18,6 +18,7 @@ const AuthLevelMap: IAuthLevelMap = {
 export async function useAuth(context: CallableContext, authLevel: AuthLevel): Promise<UserRecord> {
 
   const uid = context.auth?.['uid'];
+  console.log('useAuth uid: ', uid);
   if(!uid) {
     throw new HttpsError(
       "failed-precondition",
@@ -39,7 +40,7 @@ export async function useAuth(context: CallableContext, authLevel: AuthLevel): P
   }
 
   const { customClaims } = user;
-
+  console.log('useAuth customClaims: ', JSON.stringify(customClaims));
   if (!customClaims || !customClaims['role']) {
     throw new HttpsError(
       "unauthenticated",
