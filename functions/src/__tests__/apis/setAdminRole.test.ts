@@ -26,7 +26,7 @@ describe('Given setAdminRole is called', () => {
       });
       const requestInput = {
         headers: {
-          authorization: '',
+          "x-api-key": '',
         },
       } as unknown as functions.https.Request;
       const mockResponse = {
@@ -47,7 +47,7 @@ describe('Given setAdminRole is called', () => {
       });
       const requestInput = {
         headers: {
-          authorization: 'S@nti-1995',
+          "x-api-key": 'S@nti-1995',
         },
       } as unknown as functions.https.Request;
       const mockResponse = {
@@ -68,7 +68,7 @@ describe('Given setAdminRole is called', () => {
       });
       const requestInput = {
         headers: {
-          authorization: 'S@nti-1995',
+          "x-api-key": 'S@nti-1995',
         },
         body: {},
       } as unknown as functions.https.Request;
@@ -93,7 +93,7 @@ describe('Given setAdminRole is called', () => {
       mockAdminService.getMockImplementation;
       const requestInput = {
         headers: {
-          authorization: 'S@nti-1995',
+          "x-api-key": 'S@nti-1995',
         },
         body: { uid: 'testuid' },
       } as unknown as functions.https.Request;
@@ -116,7 +116,7 @@ describe('Given setAdminRole is called', () => {
       mockAdminService.getMockImplementation;
       const requestInput = {
         headers: {
-          authorization: 'S@nti-1995',
+          "x-api-key": 'S@nti-1995',
         },
         body: { uid: 'testuid' },
       } as unknown as functions.https.Request;

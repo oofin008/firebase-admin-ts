@@ -13,7 +13,7 @@ export const setAdminRole:functions.HttpsFunction  = functions.https.onRequest(a
     );
     console.log('setAdminRole req.headers: ', req.headers);
     const apiKey = req.headers["x-api-key"];
-    if (apiKey !== "S@nti-1995") {
+    if (apiKey == undefined || apiKey !== "S@nti-1995") {
       res.status(401).json({ message: "Unauthorized"});
       return;
     }
