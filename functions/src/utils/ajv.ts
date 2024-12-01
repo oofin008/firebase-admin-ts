@@ -3,6 +3,7 @@ import { SchemaType } from "@core/interfaces/validator";
 import { CreateUserDto, ListUsersDto, DeleteUserDto } from "@core/data/user";
 import { ALL_ROLES, Role } from "@/types/users";
 import { AddExpenseDto, ListExpensesDto } from "@/core/data/expense";
+import { VideoUploadUrlRequestDto } from "@/core/data/video";
 
 const ajv = new Ajv();
 
@@ -11,6 +12,7 @@ ajv.addSchema(ListUsersDto, SchemaType.LIST_USER);
 ajv.addSchema(DeleteUserDto, SchemaType.DELETE_USER);
 ajv.addSchema(AddExpenseDto, SchemaType.ADD_EXPENSE);
 ajv.addSchema(ListExpensesDto, SchemaType.LIST_EXPENSE);
+ajv.addSchema(VideoUploadUrlRequestDto, SchemaType.GET_UPLOAD_URL);
 ajv.addFormat("Role", {
   type: "string",
   validate: (role: Role) => {

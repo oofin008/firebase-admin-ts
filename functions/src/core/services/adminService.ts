@@ -53,6 +53,7 @@ export default class AdminService implements IAdminService {
   public async createUser(email: string, password: string, role: Role) {
     try {
       const user = await this.auth.createUser({ email, password });
+      console.log('createUser: user = ', user);
       await this.firestore.collection(this.USER_COLLECTION).doc(user.uid).set(
         {
           email: user.email,

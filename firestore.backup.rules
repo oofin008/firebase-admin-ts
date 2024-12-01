@@ -1,0 +1,4 @@
+    match /{document=**} {
+      allow read, write: if
+          request.time < timestamp.date(2022, 6, 2);
+    }

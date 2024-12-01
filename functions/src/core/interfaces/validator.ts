@@ -9,4 +9,5 @@ export enum SchemaType {
   LIST_USER = "list_user",
   ADD_EXPENSE = "add_expense",
   LIST_EXPENSE = "list_expense",
+  GET_UPLOAD_URL = "get_upload_url",
 };

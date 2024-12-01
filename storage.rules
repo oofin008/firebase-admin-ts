@@ -2,27 +2,21 @@ rules_version = '2';
 
 service firebase.storage {
  match /b/{bucket}/o {
-  match /videos {
-    // Cascade read to any video type at any path
-    match /{allVideos=**} {
-      allow write: if true;
-      allow read, list: if request.auth != null;
-    }
-
-  }
-  match /images {
-    // Cascade read to any image type at any path
-    match /{allImages=**} {
-      allow read, list: if request.auth != null;
-    }
-
-    match /{imageId} {
-      allow write: if request.resource.size < 5 * 1024 * 1024
-                  && request.resource.contentType.matches('image/.*')
-                  && imageId.size() < 32
-                  && request.auth != null
-                  && request.auth.token.role == 'admin';
-    }
+  match /{path=**} {
+      allow read: if request.auth != null && (
+        path.startsWith('users/' + request.auth.uid) ||
+        // User can access files explicitly shared with them
+        exists(/databases/{database}/documents/files/{fileId}) &&
+        (get(/databases/{database}/documents/files/{fileId}).data.sharedWith
+          .hasAny([request.auth.uid]) ||
+         get(/databases/{database}/documents/files/{fileId}).data.owner == request.auth.uid)
+      );
+      
+      // Allow writes only to owners
+      allow write: if request.auth != null && (
+        path.startsWith('users/' + request.auth.uid) ||
+        request.auth.token.role == 'admin'
+      );
   }
  }
 }

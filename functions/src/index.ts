@@ -1,11 +1,24 @@
-import * as admin from "firebase-admin";
-import { setAdminRole, setPermission } from "./apis";
-import { createUser, listUsers, getPermission, deleteUser, addExpense, listExpenses } from "./funcs";
-var serviceAcc = require("./santi-signin-service-account.json");
+import * as admin from 'firebase-admin';
+import { setAdminRole, setPermission } from './apis';
+import {
+  createUser,
+  listUsers,
+  getPermission,
+  deleteUser,
+  addExpense,
+  listExpenses,
+  getSignedUploadUrl,
+  getDownloadUrl,
+} from './funcs';
+var serviceAcc = require('./santi-signin-service-account.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAcc),
+  storageBucket: 'santi-signin.appspot.com',
 });
+
+// set only when using firebase emulators
+process.env.FIREBASE_STORAGE_EMULATOR_HOST = 'localhost:9199';
 
 // function name is importent
 // as it used as API path and callable function Name
@@ -25,4 +38,6 @@ export {
   getPermission,
   addExpense,
   listExpenses,
+  getSignedUploadUrl,
+  getDownloadUrl,
 };
