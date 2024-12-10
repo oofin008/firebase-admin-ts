@@ -16,7 +16,7 @@ export default class VideoService implements IVideoService {
   private readonly _firestore: Firestore;
   private readonly _storage: Storage;
 
-  public async generateSignedUploadUrl(filePath: string): Promise<string> {
+  public async generateSignedUploadUrl(filePath: string, metadata: { [key: string]:any }): Promise<string> {
     const bucket = this._storage.bucket();
     const file = bucket.file(filePath);
   
@@ -24,6 +24,7 @@ export default class VideoService implements IVideoService {
       metadata: {
         contentType: "video/mp4", // recieve from input to ensure correct file format
         cacheControl: "public, max-age=31536000", // Optional: Cache control for uploaded video
+        ...metadata,
       },
     });
   

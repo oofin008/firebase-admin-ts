@@ -26,9 +26,9 @@ export const getSignedUploadUrl = functions.https.onCall(
         admin.storage()
       );
 
-      let { filePath } = data;
+      let { filePath, metadata } = data;
       
-      return await videoService.generateSignedUploadUrl(filePath);
+      return await videoService.generateSignedUploadUrl(filePath, metadata);
     } catch (error: any) {
       if (error instanceof HttpsError) {
         throw error;

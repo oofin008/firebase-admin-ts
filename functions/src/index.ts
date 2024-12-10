@@ -18,7 +18,7 @@ admin.initializeApp({
 });
 
 // set only when using firebase emulators
-process.env.FIREBASE_STORAGE_EMULATOR_HOST = 'localhost:9199';
+// process.env.FIREBASE_STORAGE_EMULATOR_HOST = 'localhost:9199';
 
 // function name is importent
 // as it used as API path and callable function Name

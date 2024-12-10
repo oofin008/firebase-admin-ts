@@ -47,13 +47,15 @@ describe("VideoService", () => {
 
   it("should generate a signed upload URL", async () => {
     const filePath = "videos/test-video.mp4";
-    const url = await videoService.generateSignedUploadUrl(filePath);
+    const metadata = { test: "test-metadata" };
+    const url = await videoService.generateSignedUploadUrl(filePath, metadata);
     expect(url).toBe("mocked-upload-url");
     expect(mockStorage.bucket().file).toHaveBeenCalledWith(filePath);
     expect(mockStorage.bucket().file(filePath).createResumableUpload).toHaveBeenCalledWith({
       metadata: {
         contentType: "video/mp4",
         cacheControl: "public, max-age=31536000",
+        ...metadata,
       }
     });
   });
